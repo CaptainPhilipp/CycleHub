@@ -56,7 +56,10 @@ module Multiparentable
     end
 
     def raise_parents_arguments
-      raise ArgumentError, 'parents(records:``) or parents(ids: ``, type: ``) must be setted'
+      raise ArgumentError,
+        'parents(records:``) or parents(ids: ``, type: ``) must be setted' +
+        "(parent_ids: #{@parent_ids}, parents_type: #{@parents_type}," \
+        "records: #{@parents_collection})"
     end
   end
 end
