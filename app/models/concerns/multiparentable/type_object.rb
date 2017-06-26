@@ -18,7 +18,7 @@ module Multiparentable
 
     # tableized
     def table
-      @table ||= string.tableize || type.tableize
+      @table ||= (string && string.tableize) || type.tableize
     end
 
     private
