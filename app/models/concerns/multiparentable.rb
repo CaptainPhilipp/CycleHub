@@ -11,26 +11,34 @@ module Multiparentable
                        dependent: :destroy
   end
 
-  def add_children(children)
-    increase_children_depth(children: children, parent: parent)
-    create_relation children: children, parent: self
+  def add_children(*childrens)
+    childrens.each do |children|
+      increase_children_depth(children: children, parent: self)
+      create_relation children: children, parent: self
+    end
   end
 
-  def remove_children(children)
-    ChildrenParent.find_by(children: children, parent: self).destroy
+  def remove_children(*childrens)
+    childrens.each do |children|
+      ChildrenParent.find_by(children: children, parent: self).destroy
+    end
   end
 
-  def add_parent(parent)
-    decrease_parent_depth(children: children, parent: parent)
-    create_relation children: self, parent: parent
+  def add_parent(*parents)
+    parents.each do |parent|
+      decrease_parent_depth(children: self, parent: parent)
+      create_relation children: self, parent: parent
+    end
   end
 
-  def remove_parent(parent)
-    ChildrenParent.find_by(children: self, parent: parent).destroy
+  def remove_parent(*parents)
+    parents.each do |parent|
+      ChildrenParent.find_by(children: self, parent: parent).destroy
+    end
   end
 
   class_methods do
-    def self.where_parents(parents)
+    def where_parents(parents)
       QueryGenerator.new
         .childrens(klass: self)
         .parents(records: parents)
