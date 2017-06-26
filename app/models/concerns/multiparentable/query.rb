@@ -7,9 +7,9 @@ module Multiparentable
       self
     end
 
-    def parents(records: [], type: nil, ids: )
+    def parents(records: [], type: nil, ids: nil)
       if records.any? && records.all? { |r| r.is_a? ActiveRecord }
-        @parents = records
+        @parents_collection = records
       elsif type && ids
         @parent_ids = ids
         @parents_type = type
@@ -26,11 +26,11 @@ module Multiparentable
 
     private
 
-    attr_reader :parents, :parent_ids, :parents_type, :children
+    attr_reader :parents_collection, :parent_ids, :parents_type, :children
 
     def parents_count
-      if parents.any?
-        parents.size
+      if parents_collection.any?
+        parents_collection.size
       else parent_ids
         parent_ids.size
       end
