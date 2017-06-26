@@ -3,7 +3,7 @@ class AbstractSeed
     @arguments = args
   end
 
-  def call
+  def create
     raise NotImplementedError
   end
 
