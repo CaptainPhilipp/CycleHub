@@ -66,24 +66,32 @@ describe 'Multiparentable concern' do
 
   describe '.where_parents' do
     before do
-      parent.add_children children
-      parent1.add_children children1
-      parent2.add_children children1, children2
-      parent3.add_children children1, children2, children3
+      parent.add_children  children, children1, children2, children3
+      parent1.add_children children, children1, children2
+      parent2.add_children children, children1
+      parent3.add_children children
     end
 
-    it 'children should have equal parents' do
-      # expect(MultiparentableDouble.where_parents parent).to  match_array [children]
-      # expect(MultiparentableDouble.where_parents parent1).to match_array [children3, children2, children1]
-      expect(MultiparentableDouble.where_parents parent1, parent2).to match_array   [children2, children1]
-      expect(MultiparentableDouble.where_parents parent1, parent2, parent3).to match_array     [children1]
+    it 'children should have equal parents v1 (loose)' do
+      # expect(MultiparentableDouble.where_parents parent)
+      #   .to match_array [children, children1, children2, children3]
+      #
+      # expect(MultiparentableDouble.where_parents parent, parent1)
+      #   .to match_array [children, children1, children2]
+
+      expect(MultiparentableDouble.where_parents parent1, parent2)
+        .to match_array [children, children1]
+
+      # expect(MultiparentableDouble.where_parents parent, parent1, parent2)
+      #   .to match_array [children, children1]
+      #
+      # expect(MultiparentableDouble.where_parents parent, parent1, parent2, parent3)
+      #   .to match_array [children]
     end
 
-    it 'children should have equal parents' do
-      expect(MultiparentableDouble.where_parents parent).to  match_array [children]
-      expect(MultiparentableDouble.where_parents parent1).to match_array [children3, children2, children1]
-      expect(MultiparentableDouble.where_parents parent1, parent2).to match_array   [children2, children1]
-      expect(MultiparentableDouble.where_parents parent1, parent2, parent3).to match_array     [children1]
+    it 'children should have equal parents v2 (strict)' do
+      expect(MultiparentableDouble.where_parents parent1, parent2)
+        .to match_array [children1]
     end
   end
 end
