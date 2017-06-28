@@ -36,18 +36,18 @@ module Multiparentable
       end
     end
 
-    def multiparent_query
-      single_parent_query
-        .group("#{children.klass.table_name}.id")
-        .having("count(children_parents.parent_id) = ?", parent_ids.size)
-    end
-
     def single_parent_query
       children.klass
-        .joins(:children_associations)
+        .joins(:parent_associations)
         .where(children_parents: { parent_id:     parent_ids,
                                    parent_type:   parents_type.to_s,
                                    children_type: children.type })
+    end
+
+    def multiparent_query
+      single_parent_query
+        .group("#{children.table}.id")
+        .having("count(children_parents.parent_id) = ?", parent_ids.size)
     end
 
     def raise_parents_arguments

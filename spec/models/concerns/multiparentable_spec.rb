@@ -73,20 +73,20 @@ describe 'Multiparentable concern' do
     end
 
     it 'children should have equal parents' do
-      # expect(MultiparentableDouble.where_parents parent)
-      #   .to match_array [children, children1, children2, children3]
-      #
-      # expect(MultiparentableDouble.where_parents parent, parent1)
-      #   .to match_array [children, children1, children2]
+      expect(MultiparentableDouble.where_parents parent)
+        .to match_array [children, children1, children2, children3]
+
+      expect(MultiparentableDouble.where_parents parent, parent1)
+        .to match_array [children, children1, children2]
+
+      expect(MultiparentableDouble.where_parents parent1, parent2)
+        .to match_array [children, children1]
 
       expect(MultiparentableDouble.where_parents parent, parent1, parent2)
-        .to match_array [children, children1] # parent2
+        .to match_array [children, children1]
 
-      # expect(MultiparentableDouble.where_parents parent, parent1, parent2)
-      #   .to match_array [children, children1]
-      #
-      # expect(MultiparentableDouble.where_parents parent, parent1, parent2, parent3)
-      #   .to match_array [children]
+      expect(MultiparentableDouble.where_parents parent, parent1, parent2, parent3)
+        .to match_array [children]
     end
   end
 end
