@@ -1,15 +1,15 @@
 module Multiparentable
   class QueryGenerator
-    JOIN_TABLE = 'children_parents'
-
     def childrens(type: nil, klass: nil)
       @children = TypeObject.new(type: type, klass: klass)
       self
     end
 
     def parents(records: [], type: nil, ids: nil)
-      if records.any? && records.all? { |r| r.is_a? ActiveRecord }
+      if records.any?
         @parents_collection = records
+        @parent_ids   = @parents_collection.map(&:id)
+        @parents_type = @parents_collection.first.class
       elsif type && ids
         @parent_ids = ids
         @parents_type = type
@@ -38,21 +38,16 @@ module Multiparentable
 
     def multiparent_query
       single_parent_query
-        .group("#{children.table}.id")
-        .having("count(#{JOIN_TABLE}.parent_id) = ?", parent_ids.size)
+        .group("#{children.klass.table_name}.id")
+        .having("count(children_parents.parent_id) = ?", parent_ids.size)
     end
 
     def single_parent_query
       children.klass
-        .joins(inner_join_query_part)
-        .where(JOIN_TABLE => { parent_id:     parent_ids,
-                               parent_type:   parents_type.to_s,
-                               children_type: children_type })
-    end
-
-    def inner_join_query_part
-      "INNER JOIN #{JOIN_TABLE}" +
-      "ON #{children.table}.id = #{JOIN_TABLE}.children_id"
+        .joins(:children_associations)
+        .where(children_parents: { parent_id:     parent_ids,
+                                   parent_type:   parents_type.to_s,
+                                   children_type: children.type })
     end
 
     def raise_parents_arguments
