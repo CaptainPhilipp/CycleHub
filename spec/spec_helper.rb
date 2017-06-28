@@ -96,13 +96,11 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
-  config.order = :random
-
-  config.use_transactional_fixtures = false
+  # config.order = :random
 
   config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
   config.before(:each)  { DatabaseCleaner.strategy = :transaction }
   config.before(:each, js: true)  { DatabaseCleaner.strategy = :truncation }
   config.before(:each)       { DatabaseCleaner.start }
-  config.append_after(:each) { DatabaseCleaner.clean }
+  config.after(:each) { DatabaseCleaner.clean }
 end
