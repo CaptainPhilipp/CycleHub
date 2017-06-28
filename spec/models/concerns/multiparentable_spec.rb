@@ -6,45 +6,84 @@ describe 'Multiparentable concern' do
     model { include Multiparentable }
   end
 
-  let(:parent0) { MultiparentableDouble.create }
+  let(:parent)  { MultiparentableDouble.create }
   let(:parent1) { MultiparentableDouble.create }
   let(:parent2) { MultiparentableDouble.create }
   let(:parent3) { MultiparentableDouble.create }
 
-  let(:children0) { MultiparentableDouble.create }
+  let(:children)  { MultiparentableDouble.create }
   let(:children1) { MultiparentableDouble.create }
   let(:children2) { MultiparentableDouble.create }
   let(:children3) { MultiparentableDouble.create }
 
-  context do
-    it 'add_parent'
-    it 'remove_parent'
-    it 'remove_children'
-    it 'add_children'
+  describe '#add_children' do
+    let(:call_method) { parent.add_children children }
+
+    it 'should create join record' do
+      expect { call_method }.to change(ChildrenParent, :count).by(1)
+    end
+
+    it 'created join record should have right relations' do
+      call_method
+      expect(ChildrenParent.last.parent_id).to eq parent.id
+      expect(ChildrenParent.last.children_id).to eq children.id
+    end
   end
 
-  context do
+  describe '#remove_children' do
+    let(:call_method) { parent.remove_children children }
+
+    before { parent.add_children children }
+
+    it 'should destroy join record' do
+      expect { call_method }.to change(ChildrenParent, :count).by(-1)
+    end
+  end
+
+  describe '#add_parent' do
+    let(:call_method) { children.add_parent parent }
+
+    it 'should create join record' do
+      expect { call_method }.to change(ChildrenParent, :count).by(1)
+    end
+
+    it 'created join record should have right relations' do
+      call_method
+      expect(ChildrenParent.last.parent_id).to eq parent.id
+      expect(ChildrenParent.last.children_id).to eq children.id
+    end
+  end
+
+  describe '#remove_parent' do
+    let(:call_method) { children.remove_parent parent }
+
+    before { parent.add_children children }
+
+    it 'should destroy join record' do
+      expect { call_method }.to change(ChildrenParent, :count).by(-1)
+    end
+  end
+
+  xdescribe '.where_parents' do
     before do
-      parent0.add_children children0
+      parent.add_children children
       parent1.add_children children1
       parent2.add_children children1, children2
       parent3.add_children children1, children2, children3
     end
 
-    describe '.where_parents' do
-      it 'children should have equal parents' do
-        expect(MultiparentableDouble.where_parents parent0).to match_array(children0)
-        expect(MultiparentableDouble.where_parents parent1).to match_array(children1, children2, children3)
-        expect(MultiparentableDouble.where_parents parent1, parent2).to match_array(children1, children2)
-        expect(MultiparentableDouble.where_parents parent1, parent2, parent3).to match_array(children1)
-      end
+    it 'children should have equal parents' do
+      expect(MultiparentableDouble.where_parents parent).to match_array(children)
+      expect(MultiparentableDouble.where_parents parent1).to match_array(children1, children2, children3)
+      expect(MultiparentableDouble.where_parents parent1, parent2).to match_array(children1, children2)
+      expect(MultiparentableDouble.where_parents parent1, parent2, parent3).to match_array(children1)
+    end
 
-      it 'children should have equal parents' do
-        expect(MultiparentableDouble.where_parents parent0).to match_array(children0)
-        expect(MultiparentableDouble.where_parents parent1).to match_array(children1, children2, children3)
-        expect(MultiparentableDouble.where_parents parent1, parent2).to match_array(children1, children2)
-        expect(MultiparentableDouble.where_parents parent1, parent2, parent3).to match_array(children1)
-      end
+    it 'children should have equal parents' do
+      expect(MultiparentableDouble.where_parents parent).to match_array(children)
+      expect(MultiparentableDouble.where_parents parent1).to match_array(children1, children2, children3)
+      expect(MultiparentableDouble.where_parents parent1, parent2).to match_array(children1, children2)
+      expect(MultiparentableDouble.where_parents parent1, parent2, parent3).to match_array(children1)
     end
   end
 end
