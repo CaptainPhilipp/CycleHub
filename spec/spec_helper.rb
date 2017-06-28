@@ -13,6 +13,7 @@
 # it.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'database_cleaner'
 require 'with_model'
 
 RSpec.configure do |config|
@@ -96,4 +97,12 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
   config.order = :random
+
+  config.use_transactional_fixtures = false
+
+  config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
+  config.before(:each)  { DatabaseCleaner.strategy = :transaction }
+  config.before(:each, js: true)  { DatabaseCleaner.strategy = :truncation }
+  config.before(:each)       { DatabaseCleaner.start }
+  config.append_after(:each) { DatabaseCleaner.clean }
 end
