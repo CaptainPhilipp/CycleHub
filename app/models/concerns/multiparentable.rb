@@ -2,12 +2,12 @@ module Multiparentable
   extend ActiveSupport::Concern
 
   included do
-    has_many :children_parents
-    has_many :childs,  through: :children_parents, as: :parent,
-                       source_type: self.to_s, class_name: self.to_s,
-                       dependent: :destroy, source: 'children'
-    has_many :parents, through: :children_parents, as: :children,
-                       source_type: self.to_s, class_name: self.to_s,
+    has_many :children_associations, class_name: 'ChildrenParent', as: :parent
+    has_many :childs,  through: :children_associations, source_type: 'Category',
+                       dependent: :destroy, source: :children
+
+    has_many :parent_associations, class_name: 'ChildrenParent', as: :children
+    has_many :parents, through: :parent_associations, source_type: 'Category',
                        dependent: :destroy
   end
 

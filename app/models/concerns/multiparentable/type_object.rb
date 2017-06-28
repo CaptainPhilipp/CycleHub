@@ -1,10 +1,10 @@
 module Multiparentable
   class TypeObject
     def initialize(type: nil, klass: nil, table: nil)
-      @string_type    = type  if type.is_a?  String
-      @string_table   = table if type.is_a?  String
-      @symbol_table   = table if type.is_a?  Symbol
-      @constant_class = klass if klass.is_a? Class
+      @string_type    = type.is_a?(String) ? type  : nil
+      @string_table   = type.is_a?(String) ? table : nil
+      @symbol_table   = type.is_a?(Symbol) ? table : nil
+      @constant_class = klass.is_a?(Class) ? klass : nil
       check_arguments
     end
 
@@ -12,35 +12,25 @@ module Multiparentable
     def klass
       @klass ||= @constant_class || type.constantize
     end
-    
+
     # Symbol or tableized
     def table
-      @any_table ||= @symbol_table || table_str
+      @table ||= @symbol_table || @string_table || klass.table_name
     end
-    
+
     # classified
     def type
-      @type ||= @string_type || @string_table.classify || @constant_class.to_s
-    end
-    
-    # Symbol
-    def table_sym
-      @table_sym ||= @symbol_table || table_str.to_sym
-    end
-    
-    # tableized
-    def table_str
-      @table ||= @string_table || any_string.tableize
+      @type ||= @string_type || @constant_class.try(:to_s) || table_to_s.try(:classify)
     end
 
     private
-    
-    def any_string
-      @string ||= string_table || string_type || constant_class.to_s || @symbol_table.to_s
+
+    def table_to_s
+      @string_table || (@symbol_table && @symbol_table.to_s)
     end
 
     def check_arguments
-      return self if @klass || @string_type
+      return self if @constant_class || @string_type || @string_table || @symbol_table
       raise ArgumentError, "(type: 'Classified'), (klass: Constant) or (table: 'tableized') must be setted"
     end
   end
