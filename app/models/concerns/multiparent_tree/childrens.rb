@@ -1,12 +1,18 @@
 module MultiparentTree
-  class WhereParentsQuery
-    def childrens(type: nil, klass: nil)
-      @childrens_object = TypeObject.new(type: type, klass: klass)
+  class Childrens
+    def initialize(parents: nil, parents_type: nil, parent_ids: nil)
+      @parents_object = CollectionObject.new  records: parents,
+                                              type:    parents_type,
+                                              ids:     parent_ids
       self
     end
 
-    def parents(records: nil, type: nil, ids: nil)
-      @parents_object = CollectionObject.new(records: records, type: type, ids: ids)
+    def self.where(**args)
+      new(args)
+    end
+
+    def only(type: nil, klass: nil)
+      @childrens_object = TypeObject.new(type: type, klass: klass)
       self
     end
 
@@ -16,7 +22,11 @@ module MultiparentTree
 
     private
 
-    attr_reader :parents_object, :childrens_object, :params
+    attr_reader :parents_object, :params
+
+    def childrens_object
+      @childrens_object ||= TypeObject.new(type: parents_object.type, klass: parents_object.klass)
+    end
 
     def begin_query
       childrens_object.klass

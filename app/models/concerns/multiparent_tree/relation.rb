@@ -5,23 +5,23 @@ module MultiparentTree
       @parents   = parents   || [parent]
     end
 
-    def self.where(children: nil, childrens: nil, parent: nil, parents: nil)
-      new children: children, childrens: childrens, parent: parent, parents: parents
+    def self.where(**args)
+      new(args)
     end
 
     def create
-      ChildrenParent.create(get_params)
+      ChildrenParent.create(get_params_variants)
     end
 
     def destroy
-      where_or(get_params).destroy_all
+      where_or(get_params_variants).destroy_all
     end
 
     private
 
     attr_reader :childrens, :parents
 
-    def get_params
+    def get_params_variants
       return @params if @params
       @params = []
 

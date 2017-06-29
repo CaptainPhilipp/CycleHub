@@ -37,15 +37,11 @@ module Multiparentable
 
   class_methods do
     def where_parents(*parents)
-      MultiparentTree::WhereParentsQuery.new
-        .childrens(klass: self).parents(records: parents)
-        .call
+      MultiparentTree::Childrens.where(parents: parents).call
     end
 
     def where_parent_ids(*parent_ids, type:)
-      MultiparentTree::WhereParentsQuery.new
-        .childrens(klass: self).parents(ids: parent_ids, type: type)
-        .call
+      MultiparentTree::Childrens.where(parent_ids: parent_ids, parents_type: type).call
     end
   end
 
