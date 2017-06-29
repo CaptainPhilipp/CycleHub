@@ -31,12 +31,12 @@ describe 'Multiparentable concern' do
   end
 
   describe '#remove_children' do
-    let(:call_method) { parent.remove_children children }
+    let(:call_method) { parent.remove_children children, children1 }
 
-    before { parent.add_children children }
+    before { parent.add_children children, children1 }
 
     it 'should destroy join record' do
-      expect { call_method }.to change(ChildrenParent, :count).by(-1)
+      expect { call_method }.to change(ChildrenParent, :count).by(-2)
     end
   end
 
@@ -55,12 +55,12 @@ describe 'Multiparentable concern' do
   end
 
   describe '#remove_parent' do
-    let(:call_method) { children.remove_parent parent }
+    let(:call_method) { children.remove_parent parent, parent1 }
 
-    before { parent.add_children children }
+    before { children.add_parent parent, parent1 }
 
     it 'should destroy join record' do
-      expect { call_method }.to change(ChildrenParent, :count).by(-1)
+      expect { call_method }.to change(ChildrenParent, :count).by(-2)
     end
   end
 
