@@ -12,33 +12,25 @@ module Multiparentable
   end
 
   def add_children(*childrens)
-    MultiparentTree::RelationQuery
-      .new(childrens: childrens, parent: self)
-      .create
+    MultiparentTree::Relation.where(childrens: childrens, parent: self).create
   end
 
   alias add_childrens add_children
 
   def remove_children(*childrens)
-    MultiparentTree::RelationQuery
-      .new(childrens: childrens, parent: self)
-      .destroy
+    MultiparentTree::Relation.where(childrens: childrens, parent: self).destroy
   end
 
   alias remove_childrens remove_children
 
   def add_parent(*parents)
-    MultiparentTree::RelationQuery
-      .new(children: self, parents: parents)
-      .create
+    MultiparentTree::Relation.where(children: self, parents: parents).create
   end
 
   alias add_parents add_parent
 
   def remove_parent(*parents)
-    MultiparentTree::RelationQuery
-      .new(children: self, parents: parents)
-      .destroy
+    MultiparentTree::Relation.where(children: self, parents: parents).destroy
   end
 
   alias remove_parents remove_parent

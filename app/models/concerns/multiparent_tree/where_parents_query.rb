@@ -1,4 +1,4 @@
-module Multiparentable
+module MultiparentTree
   class WhereParentsQuery
     def childrens(type: nil, klass: nil)
       @childrens_object = TypeObject.new(type: type, klass: klass)

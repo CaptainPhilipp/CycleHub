@@ -1,8 +1,12 @@
-module Multiparentable
-  class RelationQuery
+module MultiparentTree
+  class Relation
     def initialize(children: nil, childrens: nil, parent: nil, parents: nil)
-      @childrens = childrens || [*children]
-      @parents   = parents   || [*parent]
+      @childrens = childrens || [children]
+      @parents   = parents   || [parent]
+    end
+
+    def self.where(children: nil, childrens: nil, parent: nil, parents: nil)
+      new children: children, childrens: childrens, parent: parent, parents: parents
     end
 
     def create
@@ -10,7 +14,7 @@ module Multiparentable
     end
 
     def destroy
-      where_by(get_params).destroy_all
+      where_or(get_params).destroy_all
     end
 
     private
@@ -30,7 +34,7 @@ module Multiparentable
       @params
     end
 
-    def where_by(collection)
+    def where_or(collection)
       collection
         .inject(ChildrenParent.where collection.shift) do |memorized, data|
           memorized.or(ChildrenParent.where data)

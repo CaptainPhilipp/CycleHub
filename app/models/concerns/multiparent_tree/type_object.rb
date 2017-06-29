@@ -1,4 +1,4 @@
-module Multiparentable
+module MultiparentTree
   class TypeObject
     def initialize(type: nil, klass: nil)
       assign_type(klass || type)

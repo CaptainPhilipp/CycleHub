@@ -1,4 +1,4 @@
-module Multiparentable
+module MultiparentTree
   class CollectionObject
     def initialize(records: nil, ids: nil, type: nil, klass: nil)
       @type_object = TypeObject.new(type: type || klass)
