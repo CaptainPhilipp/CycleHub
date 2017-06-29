@@ -6,12 +6,12 @@ module Multiparentable
 
     # Symbol or tableized
     def table
-      @table ||= klass.table_name
+      @table ||= klass.try(:table_name)
     end
 
     # Constant
     def klass
-      @klass ||= @constant_class || type.constantize
+      @klass ||= @constant_class || type.try(:constantize)
     end
 
     # classified

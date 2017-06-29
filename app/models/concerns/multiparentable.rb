@@ -45,13 +45,6 @@ module Multiparentable
 
   private
 
-  def create_relation(children:, parent:)
-    return true if ChildrenParent.where(children: children, parent: parent).any?
-    return false if parent.depth >= children.depth
-    ChildrenParent.create children: children, parent: parent
-    true
-  end
-
   def increase_children_depth(children:, parent:)
     return true if try_fill_depths children: children, parent: parent
     children.update depth: parent.depth + 1
