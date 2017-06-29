@@ -31,18 +31,5 @@ module Multiparentable
         .group(:id)
         .having("count(children_parents.parent_id) = ?", parents_object.count)
     end
-
-    def get_collection
-      return @collection if @collection
-      @collection = []
-
-      parents_object.ids_by_class.each do |klass, ids|
-        @collection << { parent_type: klass.to_s,
-                         parent_id: ids,
-                         children_type: childrens_object.type }
-      end
-
-      @collection
-    end
   end
 end
