@@ -1,5 +1,5 @@
 module Multiparentable
-  class Query
+  class WhereParentsQuery
     def childrens(type: nil, klass: nil)
       @children = TypeObject.new(type: type, klass: klass)
       self
