@@ -6,28 +6,28 @@ module Multiparentable
     end
 
     def create
-      ChildrenParent.create(get_collection)
+      ChildrenParent.create(get_params)
     end
 
     def destroy
-      where_by(get_collection).destroy_all
+      where_by(get_params).destroy_all
     end
 
     private
 
     attr_reader :childrens, :parents
 
-    def get_collection
-      return @collection if @collection
-      @collection = []
+    def get_params
+      return @params if @params
+      @params = []
 
       parents.each do |parent|
         childrens.each do |children|
-          @collection << { parent: parent, children: children }
+          @params << { parent: parent, children: children }
         end
       end
 
-      @collection
+      @params
     end
 
     def where_by(collection)

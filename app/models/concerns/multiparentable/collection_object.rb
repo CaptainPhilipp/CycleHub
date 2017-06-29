@@ -11,11 +11,11 @@ module Multiparentable
     end
 
     def type
-      @type ||= type_object.type || get_class_from_collection.try(:to_s)
+      @type ||= type_object.type || get_class_from_records.try(:to_s)
     end
 
     def klass
-      @klass ||= type_object.klass || get_class_from_collection
+      @klass ||= type_object.klass || get_class_from_records
     end
 
     def records
@@ -36,7 +36,7 @@ module Multiparentable
 
     private
 
-    def get_class_from_collection
+    def get_class_from_records
       @class_from_collection ||=
         by_class.size == 1 ? by_class.keys.first : false
     end

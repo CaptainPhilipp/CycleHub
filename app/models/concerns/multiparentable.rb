@@ -35,11 +35,11 @@ module Multiparentable
 
   class_methods do
     def where_parents(*parents)
-      WhereParentsQuery.new.childrens(klass: self).parents(records: parents).execute
+      WhereParentsQuery.new.childrens(klass: self).parents(records: parents).call
     end
 
     def where_parent_ids(*parent_ids, type:)
-      WhereParentsQuery.new.childrens(klass: self).parents(ids: parent_ids, type: type).execute
+      WhereParentsQuery.new.childrens(klass: self).parents(ids: parent_ids, type: type).call
     end
   end
 

@@ -10,7 +10,7 @@ module Multiparentable
       self
     end
 
-    def execute
+    def call
       parents_object.count > 1 ? multiparent_query : singleparent_query
     end
 
