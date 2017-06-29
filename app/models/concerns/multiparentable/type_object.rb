@@ -1,9 +1,7 @@
 module Multiparentable
   class TypeObject
     def initialize(type: nil, klass: nil)
-      @string_type    = type.is_a?(String) ? type  : nil
-      @constant_class = klass.is_a?(Class) ? klass : nil
-      check_arguments!
+      assign_type(klass || type)
     end
 
     # Symbol or tableized
@@ -23,9 +21,11 @@ module Multiparentable
 
     private
 
-    def check_arguments!
-      return self if @constant_class || @string_type
-      raise ArgumentError, "(type: 'Classified'), (klass: Constant) or (table: 'tableized') must be setted"
+    def assign_type(type)
+      case type
+      when String then @string_type = type
+      when Class  then @constant_class = type
+      end
     end
   end
 end
