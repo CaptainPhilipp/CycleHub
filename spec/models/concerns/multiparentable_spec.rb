@@ -6,10 +6,15 @@ describe 'Multiparentable concern' do
     model { include Multiparentable }
   end
 
+  with_model :AlienDouble do
+    table { |t| t.integer :depth; t.string :en_title }
+    model { include Multiparentable }
+  end
+
   let(:parent)  { MultiparentableDouble.create en_title: 'Parent' }
   let(:parent1) { MultiparentableDouble.create en_title: 'Parent_1' }
   let(:parent2) { MultiparentableDouble.create en_title: 'Parent_2' }
-  let(:parent3) { MultiparentableDouble.create en_title: 'Parent_3' }
+  let(:alien) { MultiparentableDouble.create en_title: 'Alien_parent' }
 
   let(:children)  { MultiparentableDouble.create en_title: 'Children' }
   let(:children1) { MultiparentableDouble.create en_title: 'Children_1' }
@@ -69,7 +74,7 @@ describe 'Multiparentable concern' do
       parent.add_children  children, children1, children2, children3
       parent1.add_children children, children1, children2
       parent2.add_children children, children1
-      parent3.add_children children
+      alien.add_children                        children2, children3
     end
 
     it 'children should have equal parents' do
@@ -85,8 +90,8 @@ describe 'Multiparentable concern' do
       expect(MultiparentableDouble.where_parents parent, parent1, parent2)
         .to match_array [children, children1]
 
-      expect(MultiparentableDouble.where_parents parent, parent1, parent2, parent3)
-        .to match_array [children]
+      expect(MultiparentableDouble.where_parents alien, parent, parent1)
+        .to match_array [children2]
     end
   end
 end
