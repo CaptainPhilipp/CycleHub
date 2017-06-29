@@ -12,60 +12,38 @@ module Multiparentable
   end
 
   def add_children(*childrens)
-    childrens.each do |children|
-      increase_children_depth(children: children, parent: self)
-      create_relation children: children, parent: self
-    end
+    ChildrenCategoryQuery.new(childrens: childrens, parent: self).create
   end
 
   def remove_children(*childrens)
-    childrens.each do |children|
-      ChildrenParent.find_by(children: children, parent: self).destroy
-    end
+    ChildrenCategoryQuery.new(childrens: childrens, parent: self).destroy
   end
 
+  alias add_childrens add_children
+  alias remove_childrens remove_children
+
   def add_parent(*parents)
-    parents.each do |parent|
-      decrease_parent_depth(children: self, parent: parent)
-      create_relation children: self, parent: parent
-    end
+    ChildrenCategoryQuery.new(children: self, parents: parents).create
   end
 
   def remove_parent(*parents)
-    parents.each do |parent|
-      ChildrenParent.find_by(children: self, parent: parent).destroy
-    end
+    ChildrenCategoryQuery.new(children: self, parents: parents).destroy
   end
+
+  alias add_parents add_parent
+  alias remove_parents remove_parent
 
   class_methods do
     def where_parents(*parents)
-      Query.new
-        .childrens(klass: self)
-        .parents(records: parents)
-        .execute
+      WhereParentsQuery.new.childrens(klass: self).parents(records: parents).call
     end
 
     def where_parent_ids(*parent_ids, type:)
-      Query.new
-        .childrens(klass: self)
-        .parents(ids: parent_ids, type: type)
-        .execute
+      WhereParentsQuery.new.childrens(klass: self).parents(ids: parent_ids, type: type).call
     end
   end
 
   private
-
-  def create_relation(children:, parent:)
-    return true if ChildrenParent.where(children: children, parent: parent).any?
-    return false if parent.depth >= children.depth
-    ChildrenParent.create children: children, parent: parent
-    true
-  end
-
-  def decrease_parent_depth(children:, parent:)
-    return true if try_fill_depths children: children, parent: parent
-    parent.update depth: children.depth - 1
-  end
 
   def increase_children_depth(children:, parent:)
     return true if try_fill_depths children: children, parent: parent
