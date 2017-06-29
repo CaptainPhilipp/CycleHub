@@ -1,5 +1,5 @@
 module Multiparentable
-  class ChildrenCategoryQuery
+  class RelationQuery
     def initialize(children: nil, childrens: nil, parent: nil, parents: nil)
       @childrens = childrens || [*children]
       @parents   = parents   || [*parent]
