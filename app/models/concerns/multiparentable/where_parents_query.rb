@@ -11,14 +11,14 @@ module Multiparentable
     end
 
     def execute
-      parents_object.count > 1 ? multiparent_query : single_parent_query
+      parents_object.count > 1 ? multiparent_query : singleparent_query
     end
 
     private
 
     attr_reader :parents_object, :childrens_object
 
-    def single_parent_query
+    def singleparent_query
       childrens_object.klass
         .joins(:parent_associations)
         .where(children_parents: { parent_id:     parents_object.ids,
@@ -27,9 +27,22 @@ module Multiparentable
     end
 
     def multiparent_query
-      single_parent_query
-        .group("#{childrens_object.table}.id")
+      singleparent_query
+        .group(:id)
         .having("count(children_parents.parent_id) = ?", parents_object.count)
+    end
+
+    def get_collection
+      return @collection if @collection
+      @collection = []
+
+      parents_object.ids_by_class.each do |klass, ids|
+        @collection << { parent_type: klass.to_s,
+                         parent_id: ids,
+                         children_type: childrens_object.type }
+      end
+
+      @collection
     end
   end
 end

@@ -31,7 +31,7 @@ module Multiparentable
     end
 
     def by_class
-      @by_class ||= @records.group_by(&:class)
+      @by_class ||= records.group_by(&:class)
     end
 
     private
