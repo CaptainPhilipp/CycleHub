@@ -8,11 +8,11 @@ module HasManyChilds
   end
 
   def add_children(*childrens)
-    MultiparentTree::Relation.where(childrens: childrens, parent: self).create
+    children_relation.create_for(childrens: childrens)
   end
 
   def remove_children(*childrens)
-    MultiparentTree::Relation.where(childrens: childrens, parent: self).destroy
+    children_relation.remove_for(childrens: childrens)
   end
 
   alias add_childrens add_children
@@ -20,15 +20,25 @@ module HasManyChilds
 
   class_methods do
     def where_parents(*parents)
-      MultiparentTree::Childrens.where(parents: parents).call
+      childs_query.where(parents: parents)
     end
 
     def where_parent_ids(*parent_ids, type:)
-      MultiparentTree::Childrens.where(parent_ids: parent_ids, parents_type: type).call
+      childs_query.where(parent_ids: parent_ids, parents_type: type)
+    end
+
+    private
+
+    def childs_query
+      MultiparentTree::ChildsQuery.new
     end
   end
 
   private
+
+  def children_relation
+    @children_relation ||= MultiparentTree::RelationQuery.new(parent: self)
+  end
 
   def increase_children_depth(children:, parent:)
     return true if try_fill_depths children: children, parent: parent
