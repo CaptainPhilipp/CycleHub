@@ -1,0 +1,17 @@
+tr.edit_row id="edit_row_#{category.id}"
+    td = category.id
+    td.open_edit_form data-object-id="#{category.id}" = category.ru_title
+    td.open_edit_form data-object-id="#{category.id}" = category.en_title
+    td.open_edit_form data-object-id="#{category.id}" = category.depth_name
+    td.btn-group.btn-group-sm role="group"
+      = link_to 'Delete', admin_category_path(category.id), method: :delete, remote: true, class: 'btn btn-default', data: { confirm: 'Sure?' }
+
+tr.edit_form id="edit_form_#{category.id}" style="display: none"
+  = form_for [:admin, category], remote: true, data: { object_id: category.id } do |f|
+    td = category.id
+    td = f.text_field :ru_title, class: 'form-control'
+    td = f.text_field :en_title, class: 'form-control'
+    td = f.select :depth, [['none', ''], 0, 1, 2], {}, class: 'form-control'
+    td.btn-group.btn-group-sm role="group"
+      = f.submit :update, class: 'btn btn-default send_edit_form'
+      = f.submit :cancel, class: 'btn btn-default close_edit_form', data: { object_id: category.id }

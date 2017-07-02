@@ -32,7 +32,9 @@
 en:
   category:
     attributes:
-      depth: 'глубина'
+      en_title: 'Английское название'
+      ru_title: 'Русское название'
+      depth: 'Тип'
       depth_index:
         nil: 'нет'
         0: 'вид спорта'

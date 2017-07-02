@@ -32,9 +32,11 @@
 en:
   category:
     attributes:
-      depth: 'depth'
+      en_title: 'English title'
+      ru_title: 'Russian title'
+      depth: 'Type'
       depth_index:
-        nil: 'none'
-        0: 'sport'
-        1: 'directory'
-        2: 'category'
+        '': 'none'
+        '0': 'sport'
+        '1': 'directory'
+        '2': 'category'
