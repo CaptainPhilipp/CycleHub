@@ -38,6 +38,7 @@ gem 'slim-rails'
 gem "less-rails"
 gem 'twitter-bootstrap-rails'
 gem 'therubyracer'
+gem 'jquery-rails'
 
 group :test do
   gem 'rspec-rails'

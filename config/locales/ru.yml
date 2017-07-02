@@ -32,9 +32,9 @@
 en:
   category:
     attributes:
-      depth: 'depth'
+      depth: 'глубина'
       depth_index:
-        nil: 'none'
-        0: 'sport'
-        1: 'directory'
-        2: 'category'
+        nil: 'нет'
+        0: 'вид спорта'
+        1: 'раздел'
+        2: 'категория'

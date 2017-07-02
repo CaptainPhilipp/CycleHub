@@ -1,0 +1,9 @@
+table#all-categories.table.table-hover
+  - @categories.each do |cat|
+    tr
+      td = cat.id
+      td = cat.ru_title
+      td = cat.en_title
+      td = cat.depth_name
+      td.btn-group.btn-group-sm
+        = button_to 'Edit', '', class: 'tabledit-edit-button btn btn-sm btn-primary active'
