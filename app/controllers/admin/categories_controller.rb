@@ -1,4 +1,4 @@
-class Admin
+module Admin
   class CategoriesController < BaseController
     def index
     end

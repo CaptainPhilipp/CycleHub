@@ -35,6 +35,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'responders'
 gem 'slim-rails'
+gem "less-rails"
 gem 'twitter-bootstrap-rails'
 gem 'therubyracer'
 
