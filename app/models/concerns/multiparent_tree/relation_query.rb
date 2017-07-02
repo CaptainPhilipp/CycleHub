@@ -1,25 +1,27 @@
 module MultiparentTree
-  class Relation
-    def initialize(children: nil, childrens: nil, parent: nil, parents: nil)
-      @childrens = childrens || [children]
-      @parents   = parents   || [parent]
+  class RelationQuery
+    def initialize(**args)
+      assign_attributes(args)
     end
 
-    def self.where(**args)
-      new(args)
-    end
-
-    def create
+    def create_for(**args)
+      assign_attributes(args)
       ChildrenParent.create(get_params_variants)
     end
 
-    def destroy
+    def remove_for(**args)
+      assign_attributes(args)
       where_or(get_params_variants).destroy_all
     end
 
     private
 
     attr_reader :childrens, :parents
+
+    def assign_attributes(children: nil, childrens: nil, parent: nil, parents: nil)
+      @childrens ||= childrens || children && [children]
+      @parents   ||= parents   || parent   && [parent]
+    end
 
     def get_params_variants
       return @params if @params
