@@ -2,7 +2,8 @@ tr.edit_row.open_edit_form id="edit_row_#{category.id}" data-object-id="#{catego
     td = category.id
     td = category.ru_title
     td = category.en_title
-    td = category.depth_name
+    td = Value::Depth.new(category.depth).title(locale)
+
     td.btn-group.btn-group-sm role="group"
       = link_to 'Delete', admin_category_path(category.id), method: :delete, remote: true, class: 'btn btn-default', data: { confirm: 'Sure?' }
 
@@ -11,7 +12,7 @@ tr.edit_form id="edit_form_#{category.id}" style="display: none"
     td = category.id
     td = f.text_field :ru_title, class: 'form-control'
     td = f.text_field :en_title, class: 'form-control'
-    td = f.select :depth, [['none', ''], 0, 1, 2], {}, class: 'form-control'
+    td = f.select :depth, Value::Depth.options_for_select(locale), {}, class: 'form-control'
     td.btn-group.btn-group-sm role="group"
       = f.submit :update, class: 'btn btn-default send_edit_form'
       = f.submit :cancel, class: 'btn btn-default close_edit_form', data: { object_id: category.id }

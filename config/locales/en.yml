@@ -36,7 +36,7 @@ en:
       ru_title: 'Russian title'
       depth: 'Type'
       depth_index:
-        '': 'none'
-        '0': 'sport'
-        '1': 'directory'
-        '2': 'category'
+        'nil': 'none'
+        depth_0: 'sport'
+        depth_1: 'directory'
+        depth_2: 'category'

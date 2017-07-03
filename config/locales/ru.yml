@@ -29,14 +29,14 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
+ru:
   category:
     attributes:
       en_title: 'Английское название'
       ru_title: 'Русское название'
       depth: 'Тип'
       depth_index:
-        '': 'нет'
-        '0': 'вид спорта'
-        '1': 'раздел'
-        '2': 'категория'
+        'nil': 'нет'
+        depth_0: 'вид спорта'
+        depth_1: 'раздел'
+        depth_2: 'категория'
