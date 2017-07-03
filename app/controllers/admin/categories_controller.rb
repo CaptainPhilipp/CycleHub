@@ -7,17 +7,8 @@ module Admin
       @category = Category.new
     end
 
-    def show
-    end
-
-    def new
-    end
-
     def create
       @category = Category.create(category_params)
-    end
-
-    def edit
     end
 
     def update
