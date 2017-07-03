@@ -1,17 +1,20 @@
 $(document).on "turbolinks:load", ->
   $('.open_edit_form').click ->
-    id = $(this).data('objectId')
-    closeAllForms()
-    toggleConcreteRow(id)
+    openInlineEditForm(this)
 
   $('.close_edit_form').click (e) ->
     e.preventDefault()
-    id = $(this).data('objectId')
-    toggleConcreteRow(id)
+    closeInlineEditForm(this)
 
-closeAllForms = ->
+openInlineEditForm = (this_) ->
+  id = $(this_).data('objectId')
   $(".edit_form").hide()
   $(".edit_row").show()
+  toggleConcreteRow(id)
+
+closeInlineEditForm = (this_) ->
+  id = $(this_).data('objectId')
+  toggleConcreteRow(id)
 
 toggleConcreteRow = (id) ->
   $("#edit_row_"  + id).toggle()
