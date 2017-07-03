@@ -1,8 +1,8 @@
-tr.edit_row id="edit_row_#{category.id}"
+tr.edit_row.open_edit_form id="edit_row_#{category.id}" data-object-id="#{category.id}"
     td = category.id
-    td.open_edit_form data-object-id="#{category.id}" = category.ru_title
-    td.open_edit_form data-object-id="#{category.id}" = category.en_title
-    td.open_edit_form data-object-id="#{category.id}" = category.depth_name
+    td = category.ru_title
+    td = category.en_title
+    td = category.depth_name
     td.btn-group.btn-group-sm role="group"
       = link_to 'Delete', admin_category_path(category.id), method: :delete, remote: true, class: 'btn btn-default', data: { confirm: 'Sure?' }
 
