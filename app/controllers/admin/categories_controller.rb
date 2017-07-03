@@ -7,6 +7,11 @@ module Admin
       @category = Category.new
     end
 
+    def tree
+      categories = Category.where.not(depth: nil)
+      @categories_by_deep = Collection::ByDeep.new(categories)
+    end
+
     def create
       @category = Category.create(category_params)
     end

@@ -1,5 +1,5 @@
 module Collection
-  class DeepCollection
+  class ByDeep
     class WrongDepth < RuntimeError; end
     attr_reader :collection
 
@@ -7,19 +7,22 @@ module Collection
       @collection = collection
     end
 
-    def grouped
-      @grouped_collection ||= collection.group_by(&:depth)
-    end
-
-    def by_depth(depth)
-      grouped.fetch convert_depth(depth)
-    end
-
-    def depths
-      @depths ||= grouped.keys
+    def each_group(&block)
+      depths.each do |depth|
+        group = grouped[depth]
+        yield(group, depth)
+      end
     end
 
     private
+
+    def depths
+      @depths ||= grouped.keys.sort
+    end
+
+    def grouped
+      @grouped_collection ||= collection.group_by(&:depth)
+    end
 
     def convert_depth(depth)
       case depth
