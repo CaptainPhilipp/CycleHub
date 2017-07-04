@@ -19,6 +19,13 @@
       background: lightgray;
       border-radius: 10px;
 
+      .activated {
+        background: gray
+      }
+
+      .hovered {
+        background: black
+      }
     }
 
     .childrens {

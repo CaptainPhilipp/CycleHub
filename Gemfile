@@ -40,6 +40,7 @@ gem 'twitter-bootstrap-rails'
 gem 'therubyracer'
 gem 'jquery-rails'
 gem 'simple_form'
+gem 'jquery-ui-rails'
 
 group :test do
   gem 'rspec-rails'

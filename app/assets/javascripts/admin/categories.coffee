@@ -31,3 +31,10 @@ $(document).on "turbolinks:load", ->
 
   $(document).mouseup (e) ->
     tableToggle.closeOpenedRow(e)
+
+  element = $('.tree_element .visible_element')
+  element.draggable()
+  element.droppable(
+    activeClass: 'activated'
+    hoverClass: 'hovered'
+  )
