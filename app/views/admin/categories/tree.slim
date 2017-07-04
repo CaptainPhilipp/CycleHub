@@ -1,7 +1,17 @@
-div.col-md-12 style="text-align: center"
-  - @categories_by_deep.each_group do |group, depth|
-    div.col-mb-12
-      - group.each do |category|
-        div style="width: 15%; display: inline-block; height: 70px" = category.title(locale)
+/ div.col-md-12 style="text-align: center"
+/   - @categories_by_deep.each_group do |group, depth|
+/     div.col-mb-12
+/       - group.each do |category|
+/         div style="width: 15%; display: inline-block; height: 70px" = category.title(locale)
 
-- console
+div.container style="text-align: center"
+  - Category.where(depth: 0).each do |sport|
+    div.col-md-3 = sport.title(locale)
+    
+div.container style="text-align: center"    
+  - Category.where(depth: 1).each do |dir|
+    div.col-md-2
+      . = dir.title(locale)
+      .
+        - dir.childs.each do |category|
+          div = category.title

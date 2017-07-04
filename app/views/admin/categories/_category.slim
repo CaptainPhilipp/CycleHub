@@ -15,4 +15,3 @@ tr.edit_form id="edit_form_#{category.id}" style="display: none"
     td = f.select :depth, Value::Depth.options_for_select(locale), {}, class: 'form-control'
     td.btn-group.btn-group-sm role="group"
       = f.submit :update, class: 'btn btn-default send_edit_form'
-      = f.submit :cancel, class: 'btn btn-default close_edit_form', data: { object_id: category.id }
