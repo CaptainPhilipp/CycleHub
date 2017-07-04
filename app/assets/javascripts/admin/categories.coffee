@@ -23,3 +23,10 @@ TableToggle =
     formId: "#edit_form_"
     rowId:  "#edit_row_"
     data: 'objectId'
+
+$(document).on "turbolinks:load", ->
+  $('.open_edit_form').click ->
+    TableToggle.openInlineEditForm(this)
+
+  $(document).mouseup (e) ->
+    TableToggle.closeOpenedRow(e)
