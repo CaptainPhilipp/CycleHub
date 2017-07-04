@@ -1,9 +1,3 @@
-/ div.col-md-12 style="text-align: center"
-/   - @categories_by_deep.each_group do |group, depth|
-/     div.col-mb-12
-/       - group.each do |category|
-/         div style="width: 15%; display: inline-block; height: 70px" = category.title(locale)
-
 .tree
   div.tree_row
     - sports = Category.where(depth: 0)
