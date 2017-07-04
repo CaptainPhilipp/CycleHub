@@ -44,6 +44,7 @@ gem 'jquery-ui-rails'
 
 group :test do
   gem 'rspec-rails'
+  gem 'launchy'
   gem 'poltergeist'
   gem "factory_girl_rails", "~> 4.0"
   gem 'shoulda-matchers'

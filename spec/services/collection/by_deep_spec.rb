@@ -1,9 +1,10 @@
 require 'rails_helper'
+# require 'support/collection/by_deep'
 
-describe 'ByDepth collection service object' do
+xdescribe 'ByDepth collection service object' do
   describe '#grouped' do
     let(:collection) { create_list :category }
-    let(:object) { Collection::DeepCollection.new(collection) }
+    let(:object) { Collection::ByDeep.new(collection) }
 
     context 'when only one depth' do
       it 'returns a hash' do
