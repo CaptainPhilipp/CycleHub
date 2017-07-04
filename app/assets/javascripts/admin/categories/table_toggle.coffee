@@ -1,6 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
 tableToggle =
   selectedRowId: ''
 
@@ -24,10 +21,3 @@ tableToggle =
     row:  "#edit_row_"
 
   data: 'objectId'
-
-$(document).on "turbolinks:load", ->
-  $('.open_edit_form').click ->
-    tableToggle.openInlineEditForm(this)
-
-  $(document).mouseup (e) ->
-    tableToggle.closeOpenedRow(e)
