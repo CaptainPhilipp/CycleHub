@@ -32,6 +32,7 @@ RSpec.configure do |config|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
+
   # rspec-mocks config goes here. You can use an alternate test double
   # library (such as bogus or mocha) by changing the `mock_with` option here.
   config.mock_with :rspec do |mocks|
@@ -98,9 +99,15 @@ RSpec.configure do |config|
 =end
   # config.order = :random
 
+  config.filter_run_when_matching :focus
+
+  # Print the 10 slowest examples and example groups at the
+  # end of the spec run, to help surface which specs are running
+  # particularly slow.
+  config.profile_examples = 3
+
   config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
   config.before(:each)  { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, js: true)  { DatabaseCleaner.strategy = :truncation }
-  config.before(:each)       { DatabaseCleaner.start }
-  config.after(:each) { DatabaseCleaner.clean }
+  config.before(:each)  { DatabaseCleaner.start }
+  config.after(:each)   { DatabaseCleaner.clean }
 end

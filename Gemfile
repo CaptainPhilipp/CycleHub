@@ -44,7 +44,8 @@ gem 'jquery-ui-rails'
 
 group :test do
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem 'poltergeist'
+  gem "factory_girl_rails", "~> 4.0"
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'with_model'
@@ -56,7 +57,9 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
-  gem 'selenium-webdriver'
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-byebug'
 end
 
 group :development do
@@ -67,9 +70,6 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'better_errors'
-  gem 'pry'
-  gem 'pry-rails'
-  gem 'pry-byebug'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
