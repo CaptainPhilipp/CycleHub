@@ -1,17 +1,15 @@
-require 'spec_helper'
-require 'capybara/poltergeist'
+# frozen_string_literal: true
 
-Capybara.javascript_driver = :poltergeist
+require 'rails_helper'
+require 'capybara'
+
+Capybara.javascript_driver = :webkit
 Capybara.server = :puma
 
-# For debug
-#
-# Capybara.register_driver :poltergeist_debug do |app|
-#   Capybara::Poltergeist::Driver.new(app, :inspector => true)
-# end
-#
-# Capybara.javascript_driver = :poltergeist_debug
-
 RSpec.configure do |config|
+  config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
+  config.before(:each)  { DatabaseCleaner.strategy = :transaction }
   config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each) { DatabaseCleaner.start }
+  config.after(:each)  { DatabaseCleaner.clean }
 end
