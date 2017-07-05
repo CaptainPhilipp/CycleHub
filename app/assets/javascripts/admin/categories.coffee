@@ -1,23 +1,32 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+$selectedRowId = null
+
 TableToggle =
   openInlineEditForm: (this_) ->
     id = $(this_).data(this.selectors.data)
-    this.toggleRow(id)
-    this.selectedRowId = id
+    console.log("> open id " + id)  # DEBUG
+
+    this.openRow(id)
+    $selectedRowId = id
 
   closeOpenedRow: (e) ->
-    row = $(this.selectors.formId + this.selectedRowId)
+    return unless $selectedRowId
+    row = $(this.selectors.formId + $selectedRowId)
     if !row.is(e.target) and row.find(e.target).length == 0
-      this.toggleRow(this.selectedRowId)
-      this.selectedRowId = null
+      console.log("< close id " + $selectedRowId) # DEBUG
 
-  toggleRow: (id) ->
-    $(this.selectors.rowId  + id).toggle()
-    $(this.selectors.formId + id).toggle()
+      this.closeRow($selectedRowId)
+      $selectedRowId = null
 
-  selectedRowId: ''
+  openRow: (id) ->
+    $(this.selectors.rowId  + id).hide()
+    $(this.selectors.formId + id).show()
+
+  closeRow: (id) ->
+    $(this.selectors.formId + id).hide()
+    $(this.selectors.rowId  + id).show()
 
   selectors:
     formId: "#edit_form_"
@@ -30,3 +39,7 @@ $(document).on "turbolinks:load", ->
 
   $(document).mouseup (e) ->
     TableToggle.closeOpenedRow(e)
+
+  $(document).bind "ajax:success", ->
+    $('.open_edit_form').click ->
+      TableToggle.openInlineEditForm(this)
