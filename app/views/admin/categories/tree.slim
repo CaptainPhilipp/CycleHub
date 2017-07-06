@@ -1,0 +1,20 @@
+.tree
+  div.tree_row
+    - sports = Category.where(depth: 0)
+    - sports.each do |sport|
+      div.col-md-2.tree_element style="width: #{100 / sports.size}%"
+        .visible_element = sport.title(locale)
+  .clearfix
+  div.tree_row
+    - directories = Category.where(depth: 1)
+    - directories.each do |dir|
+      div.col-md-2.tree_element style="width: #{100 / directories.size}%"
+        .visible_element = dir.title(locale)
+        .childrens
+          - childs = Category.where(depth: 2)
+          - childs.each do |category|
+            div = category.title(locale)
+
+  .clearfix
+  div
+    - unsorted = Category.where(depth: nil)
