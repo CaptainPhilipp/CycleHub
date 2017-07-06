@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Value
   class Depth
-    NIL = 'nil'.freeze
+    NIL = 'nil'
 
     def initialize(input = nil)
       @depth =
@@ -33,10 +35,10 @@ module Value
 
     class << self
       def options_for_select(locale)
-        [ [title(NIL, locale), nil],
-          [title(0,   locale), 0],
-          [title(1,   locale), 1],
-          [title(2,   locale), 2] ]
+        [[title(NIL, locale), nil],
+         [title(0,   locale), 0],
+         [title(1,   locale), 1],
+         [title(2,   locale), 2]]
       end
 
       def title(depth, locale)

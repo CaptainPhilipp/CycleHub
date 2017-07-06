@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Collection
   # generates list of css classes like `parent-of-5 children-of-43`
   class RelativesIds

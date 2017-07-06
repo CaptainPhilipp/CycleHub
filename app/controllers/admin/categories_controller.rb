@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Admin
   class CategoriesController < BaseController
-    before_action :load_category, only: %i(update destroy)
+    before_action :load_category, only: %i[update destroy]
 
     def index
       @categories = Category.order(:created_at)
@@ -27,7 +29,7 @@ module Admin
     private
 
     def category_params
-      params.require(:category).permit %i(ru_title en_title depth)
+      params.require(:category).permit %i[ru_title en_title depth]
     end
 
     def load_category

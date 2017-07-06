@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MultiparentTree
   class CollectionObject
     def initialize(records: nil, ids: nil, type: nil, klass: nil)
@@ -18,9 +20,7 @@ module MultiparentTree
       @klass ||= type_object.klass || get_class_from_records
     end
 
-    def records
-      @records
-    end
+    attr_reader :records
 
     def count
       @records.try(:size)

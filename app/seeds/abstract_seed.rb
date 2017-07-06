@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AbstractSeed
   def initialize(args = {})
     @arguments = args

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -42,6 +44,7 @@ gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
 
 group :test do
+  gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'factory_girl_rails', '~> 4.0'
   gem 'launchy'
@@ -49,7 +52,6 @@ group :test do
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'with_model'
-  gem 'capybara-webkit'
 end
 
 group :development, :test do
@@ -60,6 +62,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-byebug'
   gem 'pry-rails'
+  gem 'rubocop'
 end
 
 group :development do
