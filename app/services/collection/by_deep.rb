@@ -14,14 +14,14 @@ module Collection
       end
     end
 
+    def grouped
+      @grouped_collection ||= collection.group_by(&:depth)
+    end
+
     private
 
     def depths
       @depths ||= grouped.keys.sort
-    end
-
-    def grouped
-      @grouped_collection ||= collection.group_by(&:depth)
     end
 
     def convert_depth(depth)
