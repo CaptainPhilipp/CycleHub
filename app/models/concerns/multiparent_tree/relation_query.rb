@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MultiparentTree
   class RelationQuery
     def initialize(**args)
@@ -38,8 +40,8 @@ module MultiparentTree
 
     def where_or(collection)
       collection
-        .inject(ChildrenParent.where collection.shift) do |memorized, data|
-          memorized.or(ChildrenParent.where data)
+        .inject(ChildrenParent.where(collection.shift)) do |memorized, data|
+          memorized.or(ChildrenParent.where(data))
         end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MultiparentTree
   class ChildsQuery
     def initialize(type: nil, klass: nil)
@@ -20,24 +22,24 @@ module MultiparentTree
     end
 
     def singleparent_query
-      begin_query_with({ parent_id:     parents_object.ids,
-                         parent_type:   parents_object.type,
-                         children_type: childs_object.type })
+      begin_query_with(parent_id:     parents_object.ids,
+                       parent_type:   parents_object.type,
+                       children_type: childs_object.type)
     end
 
     def multiparent_query
       params_conditions
         .inject begin_query_with(params_conditions.shift) do |memorized, data|
-          memorized.or(ChildrenParent.where data)
+          memorized.or(ChildrenParent.where(data))
         end
         .group(:id)
-        .having("count(children_parents.parent_id) = ?", parents_object.count)
+        .having('count(children_parents.parent_id) = ?', parents_object.count)
     end
 
     def begin_query_with(conditions)
       childs_object.klass
-        .joins(:parent_associations)
-        .where(children_parents: conditions)
+                   .joins(:parent_associations)
+                   .where(children_parents: conditions)
     end
 
     def params_conditions

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MultiparentTree
   class TypeObject
     def initialize(type: nil, klass: nil)

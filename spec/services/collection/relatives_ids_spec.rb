@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-fdescribe 'RelativesIds service object' do
+describe 'RelativesIds service object' do
   describe '#classes_for(object)' do
     let(:category) { create :category }
     let(:children) { create :category }

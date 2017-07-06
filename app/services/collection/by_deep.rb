@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Collection
   class ByDeep
     class WrongDepth < RuntimeError; end
@@ -7,7 +9,7 @@ module Collection
       @collection = collection
     end
 
-    def each_group(&block)
+    def each_group
       depths.each do |depth|
         group = grouped[depth]
         yield(group, depth)

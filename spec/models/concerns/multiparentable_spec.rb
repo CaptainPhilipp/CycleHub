@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Multiparentable concern' do
@@ -74,23 +76,23 @@ describe 'Multiparentable concern' do
       parent.add_children  children, children1, children2, children3
       parent1.add_children children, children1, children2
       parent2.add_children children, children1
-      alien.add_children                        children2, children3
+      alien.add_children children2, children3
     end
 
     it 'children should have equal parents' do
-      expect(MultiparentableDouble.where_parents parent)
+      expect(MultiparentableDouble.where_parents(parent))
         .to match_array [children, children1, children2, children3]
 
-      expect(MultiparentableDouble.where_parents parent, parent1)
+      expect(MultiparentableDouble.where_parents(parent, parent1))
         .to match_array [children, children1, children2]
 
-      expect(MultiparentableDouble.where_parents parent1, parent2)
+      expect(MultiparentableDouble.where_parents(parent1, parent2))
         .to match_array [children, children1]
 
-      expect(MultiparentableDouble.where_parents parent, parent1, parent2)
+      expect(MultiparentableDouble.where_parents(parent, parent1, parent2))
         .to match_array [children, children1]
 
-      expect(MultiparentableDouble.where_parents alien, parent, parent1)
+      expect(MultiparentableDouble.where_parents(alien, parent, parent1))
         .to match_array [children2]
     end
   end
