@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-module Admin::BaseHelper
+module Admin
+  module BaseHelper
+  end
 end
