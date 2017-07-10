@@ -98,10 +98,17 @@ RSpec.configure do |config|
   #   Kernel.srand config.seed
   # config.order = :random
 
+  config.default_formatter = "doc"
   config.filter_run_when_matching :focus
 
   # Print the 10 slowest examples and example groups at the
   # end of the spec run, to help surface which specs are running
   # particularly slow.
   config.profile_examples = 3
+
+  config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
+  config.before(:each)  { DatabaseCleaner.strategy = :transaction }
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each) { DatabaseCleaner.start }
+  config.after(:each)  { DatabaseCleaner.clean }
 end

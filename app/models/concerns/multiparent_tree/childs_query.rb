@@ -29,8 +29,8 @@ module MultiparentTree
 
     def multiparent_query
       params_conditions
-        .inject begin_query_with(params_conditions.shift) do |memorized, data|
-          memorized.or(ChildrenParent.where(data))
+        .inject begin_query_with(params_conditions.shift) do |memorized, params_condition|
+          memorized.or(begin_query_with(params_condition))
         end
         .group(:id)
         .having('count(children_parents.parent_id) = ?', parents_object.count)

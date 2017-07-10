@@ -2,6 +2,8 @@
 
 module MultiparentTree
   class CollectionObject
+    attr_reader :records
+
     def initialize(records: nil, ids: nil, type: nil, klass: nil)
       @type_object = TypeObject.new(type: type || klass)
       @ids = ids
@@ -13,14 +15,12 @@ module MultiparentTree
     end
 
     def type
-      @type ||= type_object.type || get_class_from_records.try(:to_s)
+      @type ||= type_object.type || class_from_records.try(:to_s)
     end
 
     def klass
-      @klass ||= type_object.klass || get_class_from_records
+      @klass ||= type_object.klass || class_from_records
     end
-
-    attr_reader :records
 
     def count
       @records.try(:size)
@@ -36,11 +36,10 @@ module MultiparentTree
 
     private
 
-    def get_class_from_records
-      @class_from_collection ||=
-        by_class.size == 1 ? by_class.keys.first : false
-    end
-
     attr_reader :type_object
+
+    def class_from_records
+      @class_from_collection ||= by_class.size > 1 ? nil : records.first.class
+    end
   end
 end

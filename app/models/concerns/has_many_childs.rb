@@ -3,9 +3,9 @@
 module HasManyChilds
   extend ActiveSupport::Concern
 
-  included do
+  included do |klass|
     has_many :children_associations, class_name: 'ChildrenParent', as: :parent
-    has_many :childs,  through: :children_associations, source_type: 'Category',
+    has_many :childs,  through: :children_associations, source_type: klass.to_s,
                        dependent: :destroy, source: :children
   end
 
@@ -19,22 +19,6 @@ module HasManyChilds
 
   alias add_childrens add_children
   alias remove_childrens remove_children
-
-  class_methods do
-    def where_parents(*parents)
-      childs_query.where(parents: parents)
-    end
-
-    def where_parent_ids(*parent_ids, type:)
-      childs_query.where(parent_ids: parent_ids, parents_type: type)
-    end
-
-    private
-
-    def childs_query
-      MultiparentTree::ChildsQuery.new
-    end
-  end
 
   private
 
