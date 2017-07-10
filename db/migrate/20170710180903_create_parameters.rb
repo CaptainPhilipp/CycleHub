@@ -3,7 +3,8 @@ class CreateParameters < ActiveRecord::Migration[5.1]
     create_table :parameters do |t|
       t.string :ru_title
       t.string :en_title
-      t.datetime :deleted_at
+
+      t.string :values_type
 
       t.timestamps
     end
