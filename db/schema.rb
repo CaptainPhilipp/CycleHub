@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714180533) do
+ActiveRecord::Schema.define(version: 20170715213425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20170714180533) do
     t.integer "depth"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "short_title", null: false
+    t.index ["updated_at"], name: "index_categories_on_updated_at"
   end
 
   create_table "children_parents", force: :cascade do |t|
