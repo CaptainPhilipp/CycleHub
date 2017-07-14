@@ -1,2 +1,2 @@
-class ListValueString < ApplicationRecord
+class ListValueString < Value
 end

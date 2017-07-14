@@ -1,2 +1,2 @@
-class ListValueInt < ApplicationRecord
+class ListValueInt < Value
 end

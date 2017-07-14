@@ -1,2 +1,2 @@
-class RangeValue < ApplicationRecord
+class RangeValue < Value
 end
