@@ -7,11 +7,11 @@ class Parameter < ApplicationRecord
   validates :value_type, inclusion: { in: VALUE_TYPES }
 
   def values
-    values_class.where_parents(self)
+    values_class.where_parents(self).close_relative
   end
 
   def values_where_parents(*parents)
-    values_class.where_parents(self, *parents)
+    values_class.where_parents(self, *parents).close_relative
   end
 
   private
