@@ -34,8 +34,10 @@ module HasManyParents
       query_childs.where(parents: parents)
     end
 
-    def where_parent_ids(*parent_ids, klass:)
-      query_childs.where(ids: parent_ids.flatten, klass: klass)
+    def where_parent_ids(*parent_ids, klass: nil, type: nil)
+      klass ||= self
+      type  ||= klass.to_s
+      query_childs.where(ids: parent_ids.flatten, klass: klass, type: type)
     end
 
     private # rubocop:disable Lint/UselessAccessModifier
