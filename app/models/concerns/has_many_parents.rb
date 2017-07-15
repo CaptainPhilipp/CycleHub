@@ -5,6 +5,9 @@ module HasManyParents
 
   included do |klass|
     has_many :parent_associations, class_name: 'ChildrenParent', as: :children
+    has_many "parent_#{klass.to_s.tableize}".to_sym,
+             through: :parent_associations, source_type: klass.to_s,
+             dependent: :destroy, source: :parent
 
     scope :close_relative, -> { where(children_parents: { close_relative: true }) }
   end

@@ -1,20 +1,21 @@
-ul#menu
-  li
-    li = link_to t(:index), root_path
-  li
-    - Category.where(depth: 0).each do |cat0|
-      li
-        a = cat0.title(locale)
-        ul
-          - Category.where_parents(cat0).where(depth: 1).each do |cat1|
-            li
-              a = cat1.title(locale)
-              ul
-                - Category.where_parents(cat0, cat1).where(depth: 2).each do |cat2|
-                  li
-                    a = cat2.title(locale)
+- cache [Category.last_update, locale] do
+  ul#menu
+    li
+      li = link_to t(:index), root_path
+    li
+      - Category.includes_tree.each do |category0|
+        li
+          a = category0.title(locale)
+          ul
+            - category0.childs_dy_depth1.each do |category1|
+              li
+                a = category1.title(locale)
+                ul
+                  - category1.children_categories.each do |category2|
+                    li
+                      a = category2.title(locale)
 
-  / = link_to t(:locale), url_for(locale: t(:inverse_locale))
-  / ul
-  /   = link_to 'Русский', url_for(locale: :ru)
-  /   = link_to 'English', url_for(locale: :ru)
+    / = link_to t(:locale), url_for(locale: t(:inverse_locale))
+    / ul
+    /   = link_to 'Русский', url_for(locale: :ru)
+    /   = link_to 'English', url_for(locale: :ru)
