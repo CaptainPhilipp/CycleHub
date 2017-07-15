@@ -7,7 +7,7 @@ feature 'Admin category ajax edit spec', type: :feature do
   let!(:category) { create :category }
 
   scenario 'Admin tries to edit with form', :js do
-    visit root_path
+    visit admin_categories_path
 
     find("#edit_row_#{category.id}").click
 
@@ -26,7 +26,7 @@ feature 'Admin category ajax edit spec', type: :feature do
 
   # TODO: fix js
   xscenario 'Admin tries to edit with form twice', :js do
-    visit root_path
+    visit admin_categories_path
 
     find("#edit_row_#{category.id}").click
     within "#edit_form_#{category.id}" do

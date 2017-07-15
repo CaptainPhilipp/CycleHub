@@ -28,16 +28,16 @@ module HasManyParents
 
   class_methods do
     def where_parents(*parents)
-      childs_query.where(parents: parents)
+      query_childs.where(parents: parents)
     end
 
-    def where_parent_ids(*parent_ids, type:)
-      childs_query.where(parent_ids: parent_ids, parents_type: type)
+    def where_parent_ids(*parent_ids, klass:)
+      query_childs.where(ids: parent_ids.flatten, klass: klass)
     end
 
     private # rubocop:disable Lint/UselessAccessModifier
 
-    def childs_query
+    def query_childs
       MultiparentTree::ChildsQuery.new(klass: self)
     end
   end
