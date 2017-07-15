@@ -20,7 +20,7 @@ module MultiparentTree
           .where(children_parents: conditions)
       end
 
-      # Depedencies isolation
+      # Dependencies isolation
 
       def childs_class
         @childs_type_object.klass

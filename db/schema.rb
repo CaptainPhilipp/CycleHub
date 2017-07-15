@@ -15,6 +15,13 @@ ActiveRecord::Schema.define(version: 20170715213425) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "articles", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "ru_title"
     t.string "en_title"
@@ -34,6 +41,7 @@ ActiveRecord::Schema.define(version: 20170715213425) do
     t.datetime "updated_at", null: false
     t.boolean "close_relative"
     t.index ["children_type", "children_id"], name: "index_children_parents_on_children_type_and_children_id"
+    t.index ["children_type", "parent_type", "parent_id"], name: "index_children_parents_both_types_and_parent_id"
     t.index ["parent_type", "parent_id"], name: "index_children_parents_on_parent_type_and_parent_id"
   end
 

@@ -1,0 +1,9 @@
+- values = parameter.values_by(chosen_categories)
+/ - next if values.count == 1 && parameter.values_type == 'list'
+
+p = parameter.title
+
+div.values
+  - values = parameter.values_by(chosen_categories)
+  = render parameter.present_type, values: values, parameter: parameter
+  p = '-' if values.empty?  

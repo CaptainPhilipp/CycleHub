@@ -5,6 +5,9 @@ module HasManyParents
 
   included do |klass|
     has_many :parent_associations, class_name: 'ChildrenParent', as: :children
+    has_many "parent_#{klass.to_s.tableize}".to_sym,
+             through: :parent_associations, source_type: klass.to_s,
+             dependent: :destroy, source: :parent
 
     scope :close_relative, -> { where(children_parents: { close_relative: true }) }
   end
@@ -31,8 +34,10 @@ module HasManyParents
       query_childs.where(parents: parents)
     end
 
-    def where_parent_ids(*parent_ids, klass:)
-      query_childs.where(ids: parent_ids.flatten, klass: klass)
+    def where_parent_ids(*parent_ids, klass: nil, type: nil)
+      klass ||= self
+      type  ||= klass.to_s
+      query_childs.where(ids: parent_ids.flatten, klass: klass, type: type)
     end
 
     private # rubocop:disable Lint/UselessAccessModifier
