@@ -1,0 +1,8 @@
+div.head
+  = t :parameters
+= form_tag root_path, method: :post do
+  div.body
+    / = render @parameters
+
+    p style="color: red"= 'Нет данных' if @parameters&.empty?
+  = submit_tag t(:show), class: 'btn submit'

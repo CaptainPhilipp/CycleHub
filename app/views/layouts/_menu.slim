@@ -1,0 +1,37 @@
+ul#menu
+  li
+    li = link_to t(:index), root_path
+  / - if is_admin?
+  /   li
+  /     li = link_to t(:admin), admin_path
+  / - cache [menu_categories, locale] do
+  /   - menu_categories.select{ |x| x.deep == 0 }.each do |group|
+  /     li
+  /       = link_to group.title, category_path(group)
+  /       ul
+  /         - group.childs.select{ |x| x.deep == 1 }.each do |catgroup|
+  /           li
+  /             = link_to catgroup.title, category_path(group, catgroup)
+  /             ul
+  /               - subcategories(2, group, catgroup).each do |cat|
+  /                 li
+  /                   = link_to cat.title, category_path(group, catgroup, cat)
+  li
+    li
+  /     = link_to t(:locale), url_for( get_params(locale: t(:inverse_locale)) )
+  /     ul
+  /       = link_to 'Русский', url_for(get_params locale: :ru)
+  /       = link_to 'English', url_for(get_params locale: :ru)
+        
+  li
+    li
+      / - if user_signed_in?
+      /   = link_to t(:exit), destroy_user_session_path, method: :delete
+      /   ul
+      /     a = current_user.email
+      / - else
+      /   = link_to t(:login), new_user_session_path
+      /   ul
+      /     = link_to t(:login), new_user_session_path
+      /     = link_to t(:register), new_user_registration_path
+      /     = link_to 'facebook', user_facebook_omniauth_authorize_path

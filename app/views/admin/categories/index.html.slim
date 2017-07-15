@@ -11,7 +11,7 @@ table#categories.table.table-hover
       td
       td = f.text_field :ru_title, class: 'form-control'
       td = f.text_field :en_title, class: 'form-control'
-      td = f.select :depth, Value::Depth.options_for_select(locale), {}, class: 'form-control'
+      td = f.select :depth, Values::Depth.options_for_select(locale), {}, class: 'form-control'
       td.btn-group.btn-group-sm role="group"
         = f.submit class: 'btn btn-default'
 

@@ -1,0 +1,7 @@
+div.container
+  div.page-header
+    h1 #{@category.title}<small> #{@category.title_en.downcase}</small>
+    
+= render 'category_breadcrumbs'
+
+= render 'category_chosent'

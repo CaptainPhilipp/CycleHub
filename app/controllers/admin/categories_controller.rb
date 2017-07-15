@@ -10,8 +10,7 @@ module Admin
     end
 
     def tree
-      categories = Category.where.not(depth: nil)
-      @categories_by_deep = Collection::ByDeep.new(categories)
+      @categories_by_deep = Collection::ByDeep.new(Category.has_depth)
     end
 
     def create
