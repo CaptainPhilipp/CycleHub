@@ -3,7 +3,7 @@ html
 = render 'layouts/head'
 body
   = render 'layouts/menu'
-  div.container.page
+  div#page.container
     = yield
     = debug(params) if Rails.env.development?
 = console if Rails.env.development?
