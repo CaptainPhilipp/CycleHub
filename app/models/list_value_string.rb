@@ -1,0 +1,2 @@
+class ListValueString < Value
+end

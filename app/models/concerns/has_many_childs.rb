@@ -5,9 +5,6 @@ module HasManyChilds
 
   included do |klass|
     has_many :children_associations, class_name: 'ChildrenParent', as: :parent
-    has_many "#{klass.to_s.downcase}_childs".to_sym,
-             through: :children_associations, source_type: klass.to_s,
-             dependent: :destroy, source: :children
   end
 
   def add_children(*childrens)
