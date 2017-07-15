@@ -6,7 +6,7 @@ feature 'Admin category ajax create spec', type: :feature do
   let(:attributes) { attributes_for :category }
 
   scenario 'Admin creates a category with form', :js do
-    visit root_path
+    visit admin_categories_path
 
     fill_in 'category_en_title', with: attributes[:en_title]
     fill_in 'category_ru_title', with: attributes[:ru_title]

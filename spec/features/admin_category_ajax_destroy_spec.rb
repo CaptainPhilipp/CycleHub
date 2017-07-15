@@ -7,7 +7,7 @@ feature 'Admin category ajax destroy spec', type: :feature do
   let!(:category) { create :category }
 
   scenario 'Admin tries to destroy category', :js do
-    visit root_path
+    visit admin_categories_path
 
     within "#edit_row_#{category.id}" do
       expect(page).to have_content category.en_title

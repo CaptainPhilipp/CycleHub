@@ -4,14 +4,15 @@ module MultiparentTree
   class CollectionObject
     attr_reader :records
 
-    def initialize(records: nil, ids: nil, type: nil, klass: nil)
-      @type_object = TypeObject.new(type: type || klass)
+    def initialize(records = nil, ids: nil, type: nil, klass: nil)
+      @type_object = TypeObject.new(type: type, klass: klass)
       @ids = ids
       @records = [*records]
     end
 
     def ids
-      @ids ||= klass ? by_class[klass] : false
+      raise 'HasManyClasses' unless klass
+      @ids ||= records.map(&:id)
     end
 
     def type
