@@ -1,9 +1,6 @@
 ul#menu
   li
     li = link_to t(:index), root_path
-  / - if is_admin?
-  /   li
-  /     li = link_to t(:admin), admin_path
   li
     - Category.where(depth: 0).each do |cat0|
       li
@@ -16,7 +13,8 @@ ul#menu
                 - Category.where_parents(cat0, cat1).where(depth: 2).each do |cat2|
                   li
                     a = cat2.title(locale)
-  /     = link_to t(:locale), url_for( get_params(locale: t(:inverse_locale)) )
-  /     ul
-  /       = link_to 'Русский', url_for(get_params locale: :ru)
-  /       = link_to 'English', url_for(get_params locale: :ru)
+
+  / = link_to t(:locale), url_for(locale: t(:inverse_locale))
+  / ul
+  /   = link_to 'Русский', url_for(locale: :ru)
+  /   = link_to 'English', url_for(locale: :ru)

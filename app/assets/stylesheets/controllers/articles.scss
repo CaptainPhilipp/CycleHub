@@ -1,7 +1,7 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.post {
+.article {
   width: 75%;
   float: left;
 
@@ -50,7 +50,7 @@ $menu-button-border: 0px;
 $menu-background: #fff;
 $menu-border: 1px solid #eee;
 
-.menu {
+#parameters-menu {
   font-weight: 200;
   width: 25%;
   min-width: 160px;
@@ -61,14 +61,14 @@ $menu-border: 1px solid #eee;
     padding: 5px 14px;
     font-size: 24px;
     font-weight: 400 bold;
-    background-color: $menu_background;
+    background-color: $menu-background;
     border: $menu-border;
     border-radius: 0 10px 0 0;
     margin: 4px 0 -1px 0;
   }
 
   .body {
-    background-color: $menu_background;
+    background-color: $menu-background;
     border: $menu-border;
     margin: 0;
     padding: 5px 14px;

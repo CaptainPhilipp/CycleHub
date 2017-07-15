@@ -1,11 +1,12 @@
 = render 'page_header'
 
-div.menu
-  = render 'parameters_menu'
+= render 'parameters/menu'
 
-/ = render @articles, part_type: :row
+- if @articles.any?
+  = render @articles, format: 'row'
 
-= render 'empty_category'
+- else
+  = render 'empty'
 
 div.clearfix
 br
