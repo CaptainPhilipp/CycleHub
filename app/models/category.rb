@@ -14,7 +14,7 @@ class Category < ApplicationRecord
   scope :has_depth,     -> { where.not(depth: nil) }
   scope :last_update,   -> { order(:updated_at).limit(1).pluck(:updated_at) }
 
-  before_save :update_short_title
+  before_save :change_short_title
 
   def title(locale)
     send "#{locale}_title"
@@ -22,7 +22,7 @@ class Category < ApplicationRecord
 
   private
 
-  def update_short_title
+  def change_short_title
     new_short_title = en_title.downcase.gsub(/\sand\s/, '-n-').tr(' ', '-')
     return if new_short_title == short_title
     self.short_title = new_short_title
