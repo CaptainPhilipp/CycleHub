@@ -1,6 +1,9 @@
 div.container
   div.page-header
     - if category = @categories&.last
-      h1 #{category.title(:ru)}<small> #{category.en_title.downcase}</small>
+      h1
+        = category.title(locale)
+        '  
+        small = category.en_title.downcase if locale != :en
     
 = render 'breadcrumbs'
