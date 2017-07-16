@@ -1,0 +1,6 @@
+div.container
+  div.page-header
+    - if category = @categories&.last
+      h1 #{category.title(:ru)}<small> #{category.en_title.downcase}</small>
+    
+= render 'breadcrumbs'

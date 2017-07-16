@@ -1,2 +1,3 @@
 div.article
-  = render "article_#{format}", article: article
+  - cache [article, format]
+    = render "articles/article_#{format}", article: article
