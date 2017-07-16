@@ -1,19 +1,19 @@
-- cache [Category.last_update, locale] do
+- cache [Category, locale] do
   ul#menu
     li
       li = link_to t(:index), root_path
     li
-      - Category.includes_tree.each do |category0|
+      - Category.includes_tree.each do |cat0|
         li
-          a = category0.title(locale)
+          = link_to cat0.title(locale), build_path_for(cat0)
           ul
-            - category0.childs_dy_depth1.each do |category1|
+            - cat0.childs_dy_depth1.each do |cat1|
               li
-                a = category1.title(locale)
+                = link_to cat1.title(locale), build_path_for(cat0, cat1)
                 ul
-                  - category1.children_categories.each do |category2|
+                  - cat1.children_categories.each do |cat2|
                     li
-                      a = category2.title(locale)
+                      = link_to cat2.title(locale), build_path_for(cat0, cat1, cat2)
 
     / = link_to t(:locale), url_for(locale: t(:inverse_locale))
     / ul

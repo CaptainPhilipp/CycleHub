@@ -12,7 +12,6 @@ class Category < ApplicationRecord
 
   scope :includes_tree, -> { where(depth: 0).includes childs_dy_depth1: :children_categories }
   scope :has_depth,     -> { where.not(depth: nil) }
-  scope :last_update,   -> { order(:updated_at).limit(1).pluck(:updated_at) }
 
   before_save :change_short_title
 
@@ -20,11 +19,14 @@ class Category < ApplicationRecord
     send "#{locale}_title"
   end
 
+  def self.cache_key
+    order(updated_at: :desc).take.cache_key
+  end
+
   private
 
   def change_short_title
-    new_short_title = en_title.downcase.gsub(/\sand\s/, '-n-').tr(' ', '-')
-    return if new_short_title == short_title
-    self.short_title = new_short_title
+    return unless short_title.nil? || short_title.empty?
+    self.short_title = en_title.downcase.gsub(/\sand\s/, '-n-').tr(' ', '-')
   end
 end

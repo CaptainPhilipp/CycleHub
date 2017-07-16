@@ -31,7 +31,7 @@ module HasManyParents
 
   class_methods do
     def where_parents(*parents)
-      query_childs.where(parents: parents)
+      query_childs.where(parents: parents.flatten)
     end
 
     def where_parent_ids(*parent_ids, klass: nil, type: nil)

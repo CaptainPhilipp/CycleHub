@@ -1,0 +1,13 @@
+- if @categories&.any?
+  ol.breadcrumb
+    li = link_to t(:index), root_path
+
+    - cache [:breadcrumbs, @categories, locale]
+      - without_last = @categories[0..-2]
+
+      - without_last.each_with_index do |category, i|
+        li
+          - parent_categories = @categories[0..i]
+          = link_to category.title(locale), build_path_for(*parent_categories)
+
+      li.active = @categories.last.title(locale)
