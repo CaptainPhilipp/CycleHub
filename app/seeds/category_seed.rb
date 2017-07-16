@@ -14,14 +14,14 @@ class CategorySeed < AbstractSeed
     alias find_invalid_db_records find_outdated
 
     # dump if there are no invalid records
-    def valid_dump!(scope = nil)
+    def dump_if_db_valid(scope = nil)
       validate_db_records!(scope)
       hashlist = model.all.map { |record| map(record) }
       write_dump(hashlist)
     end
 
     # validate last saved dump
-    def dump_valid?
+    def last_dump_valid?
       hashlist = deserialize(read_last_dump)
       validate_hashlist(hashlist)
     end
