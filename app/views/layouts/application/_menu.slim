@@ -1,7 +1,7 @@
 - cache [Category, locale] do
   ul#menu
     li
-      li = link_to t(:index), root_path
+      li = link_to t(:index), home_path
     li
       - Category.includes_tree.each do |cat0|
         li
@@ -18,5 +18,5 @@
     li
       = link_to t(:inverse_locale), url_for(locale: t(:inverse_locale))
       ul
-        = link_to 'Русский', url_for(locale: :ru)
-        = link_to 'English', url_for(locale: :en)
+        = link_to t(:language, locale: :ru), url_for(locale: :ru)
+        = link_to t(:language, locale: :en), url_for(locale: :en)

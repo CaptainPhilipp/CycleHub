@@ -27,7 +27,7 @@ ru:
   language: 'Язык'
   inverse_language: 'Language'
   locale: 'rus'
-  inverse_locale: 'en'
+  inverse_locale: 'eng'
   y: 'да'
   n: 'нет'
 
