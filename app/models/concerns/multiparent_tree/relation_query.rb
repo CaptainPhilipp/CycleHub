@@ -8,12 +8,12 @@ module MultiparentTree
 
     def create_for(**args)
       assign_attributes(args)
-      ChildrenParent.create(get_params_variants)
+      ChildrenParent.create(params_variants)
     end
 
     def remove_for(**args)
       assign_attributes(args)
-      where_or(get_params_variants).destroy_all
+      where_or(params_variants).destroy_all
     end
 
     private
@@ -21,11 +21,11 @@ module MultiparentTree
     attr_reader :childrens, :parents
 
     def assign_attributes(children: nil, childrens: nil, parent: nil, parents: nil)
-      @childrens ||= childrens || children && [children]
-      @parents   ||= parents   || parent   && [parent]
+      @childrens ||= childrens || (children && [children])
+      @parents   ||= parents   || (parent   && [parent])
     end
 
-    def get_params_variants
+    def params_variants
       return @params if @params
       @params = []
 

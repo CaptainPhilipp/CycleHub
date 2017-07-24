@@ -11,7 +11,7 @@ module MultiparentTree
     end
 
     def ids
-      raise 'HasManyClasses' unless klass
+      raise HasManyClasses unless klass
       @ids ||= records.map(&:id)
     end
 
@@ -42,5 +42,7 @@ module MultiparentTree
     def class_from_records
       @class_from_collection ||= by_class.size > 1 ? nil : records.first.class
     end
+
+    class HasManyClasses < ArgumentError; end
   end
 end

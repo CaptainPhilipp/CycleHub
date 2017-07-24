@@ -24,11 +24,9 @@ module MultiparentTree
       def condition_alternatives
         @condition_alternatives ||=
           class_ids_associations.inject([]) do |alteratives, class_and_ids|
-            klass = class_and_ids.first.to_s
-            ids   = class_and_ids.last
-
+            klass, ids = class_and_ids
             alteratives << { parent_id: ids,
-                             parent_type: klass,
+                             parent_type: klass.to_s,
                              children_type: childs_type }
           end
       end
