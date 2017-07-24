@@ -16,18 +16,76 @@
 #
 # This would use the information in config/locales/es.yml.
 #
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   'true': 'foo'
-#
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  index: 'Home'
+  admin: 'Admin'
+  groups_of_sports: 'Groups of sports'
+
+  language: 'Language'
+  inverse_language: 'Язык'
+  locale: 'eng'
+  inverse_locale: 'ru'
+  y: 'yes'
+  n: 'no'
+
+  admin_panel: "Administrator's panel"
+  development: 'development'
+  category_management: 'Category management'
+  show: 'Show'
+  edit: 'Edit'
+  categories: 'Categories'
+  relations: 'Related categories'
+  activity: 'Activity'
+  active: 'Active'
+  inactive: 'Inactive'
+  active_categories: 'Active categories'
+  trash: 'Trash'
+  parameters: 'Parameters'
+  deleted_categories: 'Deleted categories'
+  ierarchy_search: 'Ierarchy search'
+  new_category: 'New category'
+  learn_more: 'Learn more'
+  this_category: 'This category'
+  change: 'Change'
+  delete: 'Delete'
+  add: 'Add'
+  control: 'Control'
+  сreate: 'Create'
+  another_categories: 'Another categories'
+  parameter: 'Parameter'
+  source: 'Source'
+
+  empty_category: 'Unfortunately, category is empty'
+
+  title_ru: 'Russian title'
+  title_en: 'English title'
+  title_short: 'Short title'
+  deep: 'Deep'
+
+  from: 'From'
+  upto: 'Upto'
+  login: 'Login'
+  logout: 'Logout'
+
+  not_specified: 'Не указано'
+
+  deep_0: 'Sports group'
+  deep_1: 'Category group'
+  deep_2: 'Category'
+
+  are_you_sure?: 'Are you sure?'
+
+  errors:
+    messages:
+        blank: 'Field cant be blank'
+        too_short: 'Text too short'
+    attributes:
+        title_ru:
+            invalid: 'Invalid format. Need: length from 3 to 30, only russian letters and spaces'
+        title_en:
+            invalid: 'Invalid format. Need: length from 2 to 25, only english letters and spaces'
+        title_short:
+            invalid: 'Invalid format. Need: length from 2 to 25, only english letters and dashes'

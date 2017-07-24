@@ -1,0 +1,2 @@
+class RangeValue < Value
+end

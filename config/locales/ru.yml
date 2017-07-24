@@ -1,0 +1,103 @@
+# Files in the config/locales direcдоry are used for internationalization
+# and are auдоmatically loaded by Rails. If you want до use locales other
+# than English, add the necessary files in this direcдоry.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased до just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+ru:
+  index: 'Главная'
+  admin: 'Админка'
+  groups_of_sports: 'Группы дисциплин'
+
+  language: 'Язык'
+  inverse_language: 'Language'
+  locale: 'rus'
+  inverse_locale: 'eng'
+  y: 'да'
+  n: 'нет'
+
+
+  admin_panel: 'Панель администратора'
+  development: 'разработка'
+  categories: 'Категории'
+  category_management: 'Управление категориями'
+  show: 'Просмотр'
+  edit: 'Редактирование'
+  relations: 'Связанные категории'
+  activity: 'Активность'
+  active: 'Активные'
+  inactive: 'Не активные'
+  active_categories: 'Активные категории'
+  inactive_categories: 'Не активные категории'
+  trash: 'Удаленные'
+  parameters: 'Параметры'
+  deleted_categories: 'Удаленные категории'
+  ierarchy_search: 'Поиск по иерархии'
+  new_category: 'Новая категория'
+  learn_more: 'Подробнее'
+  this_category: 'эта категория'
+  change: 'Применить'
+  delete: 'Удалить'
+  add: 'Добавить'
+  control: 'Управлять'
+  childs: 'Наследники'
+  parent: 'Родитель'
+  range: 'Диапазон'
+  list: 'Список'
+  type: 'Тип'
+  сreate: 'Создать'
+  another_categories: 'Другие категории'
+  parameter: 'параметр'
+  values: 'Значения'
+  values_type: 'Тип значений'
+  synonims: 'Синонимы'
+  values: 'Значения'
+  value: 'Значение'
+  source: 'Ресурс'
+
+  not_specified: 'Не указано'
+
+  empty_category: 'К сожалению, категория пуста'
+
+  title_ru: 'Русское название'
+  title_en: 'Английское название'
+  title_short: 'Короткое название'
+  deep: 'Глубина категории'
+
+  from: 'От'
+  upto: 'До'
+  login: 'Вход'
+  logout: 'Выйти'
+
+  deep_0: 'Группа дисциплин'
+  deep_1: 'Группа категорий'
+  deep_2: 'Категория'
+
+  are_you_sure?: 'Вы уверены?'
+
+  errors:
+    messages:
+      blank: 'Поле не может быть пустым. '
+      too_short: 'Слишком короткий текст. '
+    attributes:
+      title_ru:
+        invalid: 'Неверный формат. Текст должен быть длиной от 3 до 30 символов, только русские буквы и пробелы. '
+      title_en:
+        invalid: 'Неверный формат. Текст должен быть длиной от 2 до 25 символов, только латинские буквы и пробелы. '
+      title_short:
+        invalid: 'Неверный формат. Текст должен быть длиной от 2 до 25 символов, только латинские буквы и тире. '

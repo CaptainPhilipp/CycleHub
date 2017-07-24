@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170625160640) do
+ActiveRecord::Schema.define(version: 20170715213425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "articles", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "categories", force: :cascade do |t|
     t.string "ru_title"
@@ -21,6 +28,8 @@ ActiveRecord::Schema.define(version: 20170625160640) do
     t.integer "depth"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "short_title", null: false
+    t.index ["updated_at"], name: "index_categories_on_updated_at"
   end
 
   create_table "children_parents", force: :cascade do |t|
@@ -30,8 +39,38 @@ ActiveRecord::Schema.define(version: 20170625160640) do
     t.bigint "parent_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "close_relative"
     t.index ["children_type", "children_id"], name: "index_children_parents_on_children_type_and_children_id"
+    t.index ["children_type", "parent_type", "parent_id"], name: "index_children_parents_both_types_and_parent_id"
     t.index ["parent_type", "parent_id"], name: "index_children_parents_on_parent_type_and_parent_id"
+  end
+
+  create_table "list_value_ints", force: :cascade do |t|
+    t.integer "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "list_value_strings", force: :cascade do |t|
+    t.string "ru_title"
+    t.string "en_title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "parameters", force: :cascade do |t|
+    t.string "ru_title"
+    t.string "en_title"
+    t.string "values_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "range_values", force: :cascade do |t|
+    t.integer "from"
+    t.integer "upto"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

@@ -1,18 +1,23 @@
+# frozen_string_literal: true
+
 module HasManyParents
   extend ActiveSupport::Concern
 
-  included do
+  included do |klass|
     has_many :parent_associations, class_name: 'ChildrenParent', as: :children
-    has_many :parents, through: :parent_associations, source_type: 'Category',
-                       dependent: :destroy
+    has_many "parent_#{klass.to_s.tableize}".to_sym,
+             through: :parent_associations, source_type: klass.to_s,
+             dependent: :destroy, source: :parent
+
+    scope :close_relative, -> { where(children_parents: { close_relative: true }) }
   end
 
   def add_parent(*parents)
-    MultiparentTree::Relation.where(children: self, parents: parents).create
+    parent_relation.create_for(parents: parents)
   end
 
   def remove_parent(*parents)
-    MultiparentTree::Relation.where(children: self, parents: parents).destroy
+    parent_relation.remove_for(parents: parents)
   end
 
   alias add_parents add_parent
@@ -20,23 +25,25 @@ module HasManyParents
 
   private
 
-  def increase_children_depth(children:, parent:)
-    return true if try_fill_depths children: children, parent: parent
-    children.update depth: parent.depth + 1
+  def parent_relation
+    @parent_relation ||= MultiparentTree::RelationQuery.new(children: self)
   end
 
-  def try_fill_depths(children:, parent:) # : Bool
-    if children.depth && parent.depth
-      parent.depth < children.depth
+  class_methods do
+    def where_parents(*parents)
+      query_childs.where(parents: parents.flatten)
+    end
 
-    elsif children.depth.nil? && children.depth.nil?
-      transaction { children.update!(depth: 1) && parent.update!(depth: 0) }
+    def where_parent_ids(*parent_ids, klass: nil, type: nil)
+      klass ||= self
+      type  ||= klass.to_s
+      query_childs.where(ids: parent_ids.flatten, klass: klass, type: type)
+    end
 
-    elsif children.depth.nil?
-      children.update(depth: parent.depth + 1)
+    private # rubocop:disable Lint/UselessAccessModifier
 
-    elsif parent.depth.nil?
-      parent.update(depth: children.depth - 1)
+    def query_childs
+      MultiparentTree::ChildsQuery.new(klass: self)
     end
   end
 end

@@ -1,0 +1,2 @@
+class ListValueInt < Value
+end

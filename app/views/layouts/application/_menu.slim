@@ -1,0 +1,22 @@
+- cache [Category, locale] do
+  ul#menu
+    li
+      li = link_to t(:index), home_path
+    li
+      - Category.includes_tree.each do |cat0|
+        li
+          = link_to cat0.title(locale), build_path_for(cat0)
+          ul
+            - cat0.childs_dy_depth1.each do |cat1|
+              li
+                = link_to cat1.title(locale), build_path_for(cat0, cat1)
+                ul
+                  - cat1.children_categories.each do |cat2|
+                    li
+                      = link_to cat2.title(locale), build_path_for(cat0, cat1, cat2)
+
+    li
+      = link_to t(:inverse_locale), url_for(locale: t(:inverse_locale))
+      ul
+        = link_to t(:language, locale: :ru), url_for(locale: :ru)
+        = link_to t(:language, locale: :en), url_for(locale: :en)

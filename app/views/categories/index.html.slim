@@ -1,0 +1,12 @@
+= render 'page_header'
+
+= render 'parameters/menu'
+
+- if @articles.any?
+  = render @articles, format: 'row'
+
+- else
+  = render 'empty'
+
+div.clearfix
+br

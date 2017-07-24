@@ -1,25 +1,26 @@
+# frozen_string_literal: true
+
 module MultiparentTree
   class CollectionObject
-    def initialize(records: nil, ids: nil, type: nil, klass: nil)
-      @type_object = TypeObject.new(type: type || klass)
+    attr_reader :records
+
+    def initialize(records = nil, ids: nil, type: nil, klass: nil)
+      @type_object = TypeObject.new(type: type, klass: klass)
       @ids = ids
       @records = [*records]
     end
 
     def ids
-      @ids ||= klass ? by_class[klass] : false
+      raise HasManyClasses unless klass
+      @ids ||= records.map(&:id)
     end
 
     def type
-      @type ||= type_object.type || get_class_from_records.try(:to_s)
+      @type ||= type_object.type || class_from_records.try(:to_s)
     end
 
     def klass
-      @klass ||= type_object.klass || get_class_from_records
-    end
-
-    def records
-      @records
+      @klass ||= type_object.klass || class_from_records
     end
 
     def count
@@ -36,11 +37,12 @@ module MultiparentTree
 
     private
 
-    def get_class_from_records
-      @class_from_collection ||=
-        by_class.size == 1 ? by_class.keys.first : false
+    attr_reader :type_object
+
+    def class_from_records
+      @class_from_collection ||= by_class.size > 1 ? nil : records.first.class
     end
 
-    attr_reader :type_object
+    class HasManyClasses < ArgumentError; end
   end
 end
